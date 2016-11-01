@@ -4,6 +4,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
+    'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -15,8 +16,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'mdm\admin\models\User',
+            'loginUrl' => ['admin/user/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -38,6 +39,53 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+//                '/' => 'site/index',
+//                '<action:\w+>' => 'site/<action>',
+//
+//                '<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+            ],
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ]
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'admin/*',
+            'some-controller/some-action',
+            'rbac/*'
+            // The actions listed here will be allowed to everyone including guests.
+            // So, 'admin/*' should not appear here in the production, of course.
+            // But in the earlier stages of your development, you may probably want to
+            // add a lot of actions here until you finally completed setting up rbac,
+            // otherwise you may not even take a first step.
+        ]
+    ],
+    'modules' => [
+        'client' => [
+            'class' => 'app\modules\client\Module',
+        ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    /* 'userClassName' => 'app\models\User', */
+                    'idField' => 'id',
+                    'usernameField' => 'username'
+                ],
+            ],
+            'layout' => 'left-menu',
+            'mainLayout' => '@app/views/layouts/main.php',
+        ]
     ],
     'params' => $params,
 ];

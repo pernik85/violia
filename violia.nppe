@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExportProfile Ver="1.2">
+  <General ConnectionUserUUID="" ConnectionName="violia" DatabaseName="violia" SchemaName="public" ExportType="SQL" TargetCodepage="65001" AddTimeStamp="false" TimeStampFormat="" IncludeTitle="false" FieldDelimiter="	" DateFormat="DMY" DateSeparator="." ZeroPaddingDate="false" TimeSeparator=":" DecimalSeparator="," TextQualifier="&quot;" RowDelimiter="0" XMLFormat="Element" UseBase64="true" AppendRecord="false" ContinueOnError="true"/>
+  <STable STableName="auth_assignment" TTableName="" TargetFile="C:\Users\Кум\Desktop\auth_assignment.sql" AllFields="true"/>
+  <STable STableName="auth_item" TTableName="" TargetFile="C:\Users\Кум\Desktop\auth_item.sql" AllFields="true"/>
+  <STable STableName="auth_item_child" TTableName="" TargetFile="C:\Users\Кум\Desktop\auth_item_child.sql" AllFields="true"/>
+  <STable STableName="auth_rule" TTableName="" TargetFile="C:\Users\Кум\Desktop\auth_rule.sql" AllFields="true"/>
+  <STable STableName="clients" TTableName="" TargetFile="C:\Users\Кум\Desktop\clients.sql" AllFields="true"/>
+  <STable STableName="menu" TTableName="" TargetFile="C:\Users\Кум\Desktop\menu.sql" AllFields="true"/>
+  <STable STableName="migration" TTableName="" TargetFile="C:\Users\Кум\Desktop\migration.sql" AllFields="true"/>
+  <STable STableName="objects" TTableName="" TargetFile="C:\Users\Кум\Desktop\objects.sql" AllFields="true"/>
+  <STable STableName="user" TTableName="" TargetFile="C:\Users\Кум\Desktop\user.sql" AllFields="true"/>
+</ExportProfile>
