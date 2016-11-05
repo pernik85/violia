@@ -10,6 +10,7 @@ use yii\base\Model;
  */
 class Signup extends Model
 {
+    public $id;
     public $username;
     public $email;
     public $password;

@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use app\models\Clients;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Objects */
@@ -11,7 +13,16 @@ use yii\widgets\ActiveForm;
 <div class="objects-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?php
+        $modelClients = new Clients();
+        $clients = Clients::find()->all();
+        // формируем массив, с ключем равным полю 'id' и значением равным полю 'name'
+        $items = ArrayHelper::map($clients,'id','last_name');
+        $params = [
+            'prompt' => 'Укажите клиента'
+        ];
+        echo $form->field($model, 'client_id')->dropDownList($items,$params);
+    ?>
 <!--    --><?//= $form->field($model, 'id')->textInput() ?>
 
 <!--    --><?//= $form->field($model, 'client_id')->textInput() 'value' => 'hidden value' ?>

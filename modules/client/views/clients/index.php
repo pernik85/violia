@@ -26,7 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'last_name',
             'patronymic',
             'position',
-            // 'phone',
+             ['label' => 'Объекты', 'format' => 'raw',
+                 'value' => function($data){
+                     return Html::a(
+                         'Перейти',
+                         '/client/objects?client_id='.$data->id,
+                         [
+                             'title' => 'Смелей вперед!',
+                             'target' => '_blank'
+                         ]
+                     );
+                 }
+             ],
             // 'mail',
 
             ['class' => 'yii\grid\ActionColumn'],

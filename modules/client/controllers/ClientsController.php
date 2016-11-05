@@ -67,17 +67,16 @@ class ClientsController extends Controller
     {
         $model = new Clients();
         $sign = new Signup();
-        $data = Yii::$app->request->post();
-//        die(pr($_POST));
         if(isset($_POST['Clients'], $_POST['Signup'])){
             $sign->setAttributes($_POST['Signup']);
             $_POST['Clients']['manager_id'] = Yii::$app->user->id.'';
             $model->setAttributes($_POST['Clients']);
+
             $transaction = Yii::$app->db->beginTransaction();
-            if($model->save() && $sign->signup()){
-                Yii::app()->db->createCommand(
-                    "INSERT INTO auth_assignment (id, email)
-                        value ('client', {$sign->id}, ".time().")"
+            if($model->save() && $signId = $sign->signup()){
+                Yii::$app->db->createCommand(
+                    "INSERT INTO auth_assignment (item_name, user_id, created_at)
+                        values ('client', {$signId->id}, ".time().")"
                 )->execute();
                 $transaction->commit();
                 return $this->redirect(['view', 'id' => $model->id]);

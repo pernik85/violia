@@ -38,7 +38,7 @@ class Objects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'client_id', 'name', 'addres'], 'required'],
+            [['client_id', 'name', 'addres'], 'required'],
             [['id', 'client_id', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
             [['coord_lat', 'coord_long'], 'number'],
             [['actie'], 'boolean'],

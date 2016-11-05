@@ -35,8 +35,14 @@ class ObjectsController extends Controller
      */
     public function actionIndex()
     {
+        if(isset($_GET['client_id'])){
+            $query = Objects::find()->where(['user_id'=>$_GET['client_id']]);
+        } else {
+            $query = Objects::find();
+        }
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Objects::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -66,8 +72,10 @@ class ObjectsController extends Controller
         $model = new Objects();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+//            die(pr($model->getErrors()));
             return $this->render('create', [
                 'model' => $model,
             ]);
