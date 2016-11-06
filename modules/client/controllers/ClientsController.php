@@ -77,7 +77,7 @@ class ClientsController extends Controller
             if($model->save() && $sign->signup()){
                 Yii::app()->db->createCommand(
                     "INSERT INTO auth_assignment (id, email)
-                        value ('client', )"
+                        value ('client', {$sign->id}, ".time().")"
                 )->execute();
                 $transaction->commit();
                 return $this->redirect(['view', 'id' => $model->id]);
