@@ -4,11 +4,12 @@ namespace app\modules\client\controllers;
 
 use Yii;
 use app\models\Clients;
-use app\models\User;
+use mdm\admin\models\User;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use mdm\admin\models\form\Signup;
 
 /**
  * ClientsController implements the CRUD actions for Clients model.
@@ -65,25 +66,27 @@ class ClientsController extends Controller
     public function actionCreate()
     {
         $model = new Clients();
-        $user = new User();
+        $sign = new Signup();
         $data = Yii::$app->request->post();
-        if(isset($_POST['Clients'], $_POST['User'])){
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->setPassword($this->password);
-            $user->generateAuthKey();
+//        die(pr($_POST));
+        if(isset($_POST['Clients'], $_POST['Signup'])){
+            $sign->setAttributes($_POST['Signup']);
             $_POST['Clients']['manager_id'] = Yii::$app->user->id.'';
-            $model->attributes = $_POST['Clients'];
+            $model->setAttributes($_POST['Clients']);
             $transaction = Yii::$app->db->beginTransaction();
-            if($model->save() && $user->save()){
+            if($model->save() && $sign->signup()){
+                Yii::app()->db->createCommand(
+                    "INSERT INTO auth_assignment (id, email)
+                        value ('client', )"
+                )->execute();
                 $transaction->commit();
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
-                $transaction->rollback();
             }
+            $transaction->rollback();
         }
+//        die(pr($model->attributes, $sign->attributes));
         return $this->render('create', [
-            'model' => $model, 'user' => $user
+            'model' => $model, 'user' => $sign
         ]);
     }
 
